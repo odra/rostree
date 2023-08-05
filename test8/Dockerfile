@@ -69,7 +69,7 @@ RUN touch ./src/ros-visualization/rqt/rqt_gui_cpp/CATKIN_IGNORE && \
 touch ./src/ros-visualization/qt_gui_core/qt_gui_app/CATKIN_IGNORE && \
 touch ./src/ros-visualization/qt_gui_core/qt_gui_cpp/CATKIN_IGNORE
 
-WORKDIR /etc/ros2/ros2
+WORKDIR /etc/ros2
 RUN sed -i '1s/^/#include <stdint.h> /' /etc/ros2/src/ros2/rcpputils/include/rcpputils/filesystem_helper.hpp
 RUN sed -i '1s/^/#include <stdint.h> /' /etc/ros2/src/ros-tooling/libstatistics_collector/include/libstatistics_collector/moving_average_statistics/types.hpp
 RUN sed -i '1s/^/#include <stdexcept> /' /etc/ros2/src/ros2/rclcpp/rclcpp/include/rclcpp/context.hpp
@@ -89,7 +89,7 @@ RUN rm -rf /var/lib/unbound
 RUN rm -rf /var/lib/dnf
 RUN rm -rf /var/lib/texmf
 RUN rm -rf /var/log
-RUN chmod +x /etc/ros2/ros2/install/*
+RUN chmod +x /etc/ros2/install/*
 RUN ostree container commit
 WORKDIR /etc/ros2/src/ros2
 RUN ls
