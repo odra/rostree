@@ -1,7 +1,6 @@
-# FROM ghcr.io/jmarrero/fedora-silverblue:38
 FROM ghcr.io/jmarrero/fedora-silverblue:38
 
-ARG ROS_VERSION=humble
+ARG ROS_VERSION=rolling
 
 ENV LANG=en_US.UTF-8
 ENV RPM_ARCH=x86_64
@@ -78,6 +77,22 @@ RUN sed -i '1s/^/#include <stdexcept> /' /etc/ros2/src/ros2/rclcpp/rclcpp/src/rc
 RUN sed -i '1s/^/#include <stdint.h> /' /etc/ros2/src/ros2/rosbag2/rosbag2_compression/include/rosbag2_compression/compression_options.hpp
 # RUN rm -R /ros2/src/ros2/
 
+# WORKDIR 
+# RUN find -name 'rviz_assimp_vendor'
+# RUN rm -R /etc/ros2/src/ros2/rviz/rviz_assimp_vendor
+# RUN mkdir /etc/ros2/src/ros2/rviz/rviz_assimp_vendor
+# WORKDIR /zetc/ros2/src/ros2/rviz/rviz_assimp_vendor
+# RUN git init
+# RUN git remote add -f origin https://github.com/ros2/rviz.git
+# RUN git config core.sparseCheckout true
+# RUN echo "rviz_assimp_vendor" >> .git/info/sparse-checkout
+# RUN git pull origin humble
+
+RUN rm -R /etc/ros2/src/ros2/rviz/
+WORKDIR /etc/ros2/src/ros2/
+RUN git clone -b humble https://github.com/ros2/rviz.git
+
+WORKDIR /etc/ros2
 RUN test -f /usr/bin/ld || ln -s /usr/bin/ld.bfd /usr/bin/ld
 RUN colcon build --symlink-install --cmake-args -DTHIRDPARTY_Asio=ON --no-warn-unused-cli
 
